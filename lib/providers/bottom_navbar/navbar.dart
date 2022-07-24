@@ -1,9 +1,6 @@
 import 'package:flutter/widgets.dart';
 import '../../screens/screen1/screen1.dart';
 import '../../screens/screen2/screen2.dart';
-import '../../screens/screen3/screen3.dart';
-import '../../screens/screen4/screen4.dart';
-import '../../screens/screen5/screen5.dart';
 
 import '../../helpers/routes/custom_routes.dart';
 
@@ -16,12 +13,6 @@ class BottomNavBarProvider {
         return const Screen1();
       case Screens.two:
         return const Screen2();
-      case Screens.three:
-        return const Screen3();
-      case Screens.four:
-        return const Screen4();
-      case Screens.five:
-        return const Screen5();
       default:
         return const Screen1();
     }
