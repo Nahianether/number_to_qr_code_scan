@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pattern/components/widgets/buttons/elevated_button.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -12,6 +13,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     var qrCodeGenerateProvider =
         Provider.of<QRCodeGenerateProvider>(context, listen: false);
+    qrCodeGenerateProvider.reload();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -27,7 +29,7 @@ class Body extends StatelessWidget {
             text: 'Generate QR Code',
             onPressed: () async {
               var data = qrCodeGenerateProvider.getTextEditingController.text;
-              print('vodar data: $data');
+              print('QR code text: $data');
               qrCodeGenerateProvider.reload();
             },
           ),
@@ -35,6 +37,39 @@ class Body extends StatelessWidget {
           QRCodeToImage(
             text: qrCodeGenerateProvider.getTextEditingController.text,
           ),
+          const SizedBox(height: 8),
+          qrCodeGenerateProvider.getTextEditingController.text.isNotEmpty
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    KDefaultButton(
+                      height: 38,
+                      width: 100,
+                      text: 'Clear',
+                      onPressed: () {
+                        qrCodeGenerateProvider.getTextEditingController.clear();
+                        qrCodeGenerateProvider.reload();
+                      },
+                    ),
+                    KDefaultButton(
+                      height: 38,
+                      width: 100,
+                      text: 'Print',
+                      onPressed: () {
+                        Fluttertoast.showToast(
+                          msg: 'This Feature is not yet available',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      },
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -51,7 +86,7 @@ class QRCodeToImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return QrImage(
-      data: text ?? '',
+      data: text ?? 'This is a Sample QR Code',
       version: QrVersions.auto,
       size: 320,
       gapless: false,
