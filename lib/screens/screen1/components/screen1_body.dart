@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pattern/components/widgets/buttons/elevated_button.dart';
+import 'package:pattern/helpers/routes/custom_routes.dart';
+import 'package:pattern/screens/screen1/components/qr_code.dart';
+import 'package:pattern/screens/screen1/screen1.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -13,7 +16,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     var qrCodeGenerateProvider =
         Provider.of<QRCodeGenerateProvider>(context, listen: false);
-    qrCodeGenerateProvider.reload();
+    // qrCodeGenerateProvider.reload();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -30,7 +33,13 @@ class Body extends StatelessWidget {
             onPressed: () async {
               var data = qrCodeGenerateProvider.getTextEditingController.text;
               print('QR code text: $data');
-              qrCodeGenerateProvider.reload();
+              // qrCodeGenerateProvider.reload();
+              Navigator.pushReplacement(
+                context,
+                FadeRoute(
+                  page: const Screen1(),
+                ),
+              );
             },
           ),
           const SizedBox(height: 8),
@@ -72,24 +81,6 @@ class Body extends StatelessWidget {
               : const SizedBox.shrink(),
         ],
       ),
-    );
-  }
-}
-
-class QRCodeToImage extends StatelessWidget {
-  const QRCodeToImage({
-    Key? key,
-    this.text,
-  }) : super(key: key);
-
-  final String? text;
-  @override
-  Widget build(BuildContext context) {
-    return QrImage(
-      data: text ?? 'This is a Sample QR Code',
-      version: QrVersions.auto,
-      size: 320,
-      gapless: false,
     );
   }
 }

@@ -60,7 +60,7 @@ InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
 );
 
 OutlineInputBorder lightOutlineInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(28),
+  borderRadius: BorderRadius.circular(10),
   gapPadding: 10,
 );
 
